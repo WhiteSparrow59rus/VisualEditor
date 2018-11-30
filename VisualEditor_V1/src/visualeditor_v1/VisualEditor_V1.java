@@ -7,6 +7,8 @@ package visualeditor_v1;
 
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -20,6 +22,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -49,14 +54,32 @@ public class VisualEditor_V1 extends Application {
         GridPane.setHgrow(third, Priority.ALWAYS);
         GridPane.setVgrow(third, Priority.ALWAYS);
          
-        Button fourth = new Button("Fourth");
+        
+        Rectangle rect = new Rectangle(200, 200, Color.RED);
+        ScrollPane canvasscroll = new ScrollPane();
+        
+        canvasscroll.setContent(rect);
+
+        canvasscroll.vvalueProperty().addListener(new ChangeListener<Number>() {
+          public void changed(ObservableValue<? extends Number> ov,
+              Number old_val, Number new_val) {
+                  System.out.println(new_val.intValue());
+          }
+        });
+        canvasscroll.hvalueProperty().addListener(new ChangeListener<Number>() {
+          public void changed(ObservableValue<? extends Number> ov,
+              Number old_val, Number new_val) {
+                  System.out.println(new_val.intValue());
+          }
+      });        
+        
         // кнопка заполняет все пространство ячейки
-        fourth.setMaxWidth(Double.MAX_VALUE);
-        fourth.setMaxHeight(Double.MAX_VALUE);
-        GridPane.setHgrow(fourth, Priority.ALWAYS);
-        GridPane.setVgrow(fourth, Priority.ALWAYS);
+        canvasscroll.setMaxWidth(Double.MAX_VALUE);
+        canvasscroll.setMaxHeight(Double.MAX_VALUE);
+        GridPane.setHgrow(canvasscroll, Priority.ALWAYS);
+        GridPane.setVgrow(canvasscroll, Priority.ALWAYS);
         // установим отступ в 10 единиц
-        GridPane.setMargin(fourth, new Insets(10));
+        GridPane.setMargin(canvasscroll, new Insets(10));
          
          
         GridPane root = new GridPane();
@@ -82,7 +105,7 @@ public class VisualEditor_V1 extends Application {
         root.add(first, 0, 0);
         root.add(second, 0, 1);
         root.add(third, 1, 0);
-        root.add(fourth, 1, 1);
+        root.add(canvasscroll, 1, 1);
          
          
         Scene scene = new Scene(root, 1000, 600);
