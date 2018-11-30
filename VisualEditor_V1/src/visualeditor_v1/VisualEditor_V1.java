@@ -35,31 +35,28 @@ public class VisualEditor_V1 extends Application {
     @Override
     public void start(Stage primaryStage) {
           
-        Button first = new Button("First");
+        Label Top = new Label("Top");
         // расположем кнопку в нижнем правом углу
-        GridPane.setHalignment(first, HPos.LEFT);
-        GridPane.setValignment(first, VPos.TOP);
+        GridPane.setHalignment(Top, HPos.LEFT);
+        GridPane.setValignment(Top, VPos.TOP);
          
-        Button second = new Button("Second");
+        Label Tools = new Label("Tools");
          
         // растянем кнопку по горизонтали
-        second.setMaxWidth(Double.MAX_VALUE);
-        GridPane.setHgrow(second, Priority.ALWAYS);
-        GridPane.setValignment(second, VPos.TOP);
+        Tools.setMaxWidth(Double.MAX_VALUE);
+        GridPane.setHgrow(Tools, Priority.ALWAYS);
+        GridPane.setValignment(Tools, VPos.TOP);
          
-        Button third = new Button("Third");
+        Label TopR = new Label("TopR");
         // растянем кнопку по горизонтали и вертикали
-        third.setMaxWidth(Double.MAX_VALUE);
-        third.setMaxHeight(Double.MAX_VALUE);
-        GridPane.setHgrow(third, Priority.ALWAYS);
-        GridPane.setVgrow(third, Priority.ALWAYS);
+        TopR.setMaxWidth(Double.MAX_VALUE);
+        TopR.setMaxHeight(Double.MAX_VALUE);
+        GridPane.setHgrow(TopR, Priority.ALWAYS);
+        GridPane.setVgrow(TopR, Priority.ALWAYS);
          
         
-        Rectangle rect = new Rectangle(200, 200, Color.RED);
-        ScrollPane canvasscroll = new ScrollPane();
         
-        canvasscroll.setContent(rect);
-
+        ScrollPane canvasscroll = new ScrollPane();
         canvasscroll.vvalueProperty().addListener(new ChangeListener<Number>() {
           public void changed(ObservableValue<? extends Number> ov,
               Number old_val, Number new_val) {
@@ -102,9 +99,9 @@ public class VisualEditor_V1 extends Application {
         root.getRowConstraints().add(row2);
          
         root.setGridLinesVisible(true);
-        root.add(first, 0, 0);
-        root.add(second, 0, 1);
-        root.add(third, 1, 0);
+        root.add(Top, 0, 0);
+        root.add(Tools, 0, 1);
+        root.add(TopR, 1, 0);
         root.add(canvasscroll, 1, 1);
          
          
