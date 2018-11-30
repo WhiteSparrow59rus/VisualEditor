@@ -10,6 +10,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -21,22 +25,28 @@ public class VisualEditor_V1 extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
         
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
+      
+      
+       Label first = new Label("First");
+        Label second = new Label("Second");
+        Label third = new Label("Third");
+         
+        GridPane root = new GridPane();
+        root.getColumnConstraints().add(new ColumnConstraints(80));
+        root.getColumnConstraints().add(new ColumnConstraints(150));
+        root.getColumnConstraints().add(new ColumnConstraints(70));
+         
+        root.setGridLinesVisible(true); // делаем видимой сетку строк и столбцов
+        root.setColumnIndex(first, 0);
+        root.setColumnIndex(second, 1);
+        root.setColumnIndex(third, 2);
+        root.getChildren().addAll(first, second, third);
+         
+         
+        Scene scene = new Scene(root, 300, 200);
+
+        primaryStage.setTitle("Editor");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
