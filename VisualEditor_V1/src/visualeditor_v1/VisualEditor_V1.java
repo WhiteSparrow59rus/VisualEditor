@@ -105,7 +105,7 @@ public class VisualEditor_V1 extends Application {
         root.add(canvasscroll, 1, 1);
          
          
-        Scene scene = new Scene(root, 1000, 600);
+        Scene scene = new Scene(root, 1024, 768);
       
         primaryStage.setTitle("Editor");
         primaryStage.setScene(scene);
