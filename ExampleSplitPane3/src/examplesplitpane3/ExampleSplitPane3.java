@@ -8,12 +8,15 @@ package examplesplitpane3;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -27,6 +30,9 @@ import javafx.stage.Stage;
  * @author Potapov-VI
  */
 public class ExampleSplitPane3 extends Application {
+    Circle circle_Blue;
+    double orgSceneX, orgSceneY;
+    double orgTranslateX, orgTranslateY;
     
     @Override
     public void start(Stage primaryStage) {
@@ -129,8 +135,14 @@ public class ExampleSplitPane3 extends Application {
         SplitPane.setResizableWithParent(TopHBox, Boolean.FALSE);
         SplitPane.setResizableWithParent(ToolsTopHBox, Boolean.FALSE);
         
-        Circle rect = new Circle(200, 200, 100, Color.BLUE);
-        canvasscroll.setContent(rect);
+        
+        circle_Blue = new Circle(50.0f, Color.BLUE);
+        circle_Blue.setCursor(Cursor.HAND);
+        circle_Blue.setTranslateX(300);
+        circle_Blue.setTranslateY(100);
+        circle_Blue.setOnMousePressed(circleOnMousePressedEventHandler);
+        circle_Blue.setOnMouseDragged(circleOnMouseDraggedEventHandler);
+        canvasscroll.setContent(circle_Blue);
         
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -142,5 +154,30 @@ public class ExampleSplitPane3 extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    EventHandler<MouseEvent> circleOnMousePressedEventHandler = 
+        new EventHandler<MouseEvent>() {
+
+        @Override
+        public void handle(MouseEvent t) {
+            orgSceneX = t.getSceneX();
+            orgSceneY = t.getSceneY();
+            orgTranslateX = ((Circle)(t.getSource())).getTranslateX();
+            orgTranslateY = ((Circle)(t.getSource())).getTranslateY();
+        }
+    };
     
+    EventHandler<MouseEvent> circleOnMouseDraggedEventHandler = 
+        new EventHandler<MouseEvent>() {
+
+        @Override
+        public void handle(MouseEvent t) {
+            double offsetX = t.getSceneX() - orgSceneX;
+            double offsetY = t.getSceneY() - orgSceneY;
+            double newTranslateX = orgTranslateX + offsetX;
+            double newTranslateY = orgTranslateY + offsetY;
+            
+            ((Circle)(t.getSource())).setTranslateX(newTranslateX);
+            ((Circle)(t.getSource())).setTranslateY(newTranslateY);
+        }
+    };
 }
