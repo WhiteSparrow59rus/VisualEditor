@@ -7,7 +7,7 @@ package exampledragconnectedshapes;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
+
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -90,6 +90,7 @@ public class ExampleDragConnectedShapes extends Application {
         Circle redCircle = createCircle(100, 50, 30, Color.RED);
         Circle blueCircle = createCircle(200, 150, 20, Color.BLUE);
         Circle greenCircle = createCircle(400, 100, 40, Color.GREEN);
+        Circle greenCircle2 = createCircle(400, 100, 40, Color.GREEN);
  
         Line line1 = connect(redCircle, blueCircle);
         Line line2 = connect(redCircle, greenCircle);
@@ -99,6 +100,7 @@ public class ExampleDragConnectedShapes extends Application {
         root.getChildren().add(redCircle);
         root.getChildren().add(blueCircle);
         root.getChildren().add(greenCircle);
+        root.getChildren().add(greenCircle2);
  
         // add the lines 
         root.getChildren().add(line1);
