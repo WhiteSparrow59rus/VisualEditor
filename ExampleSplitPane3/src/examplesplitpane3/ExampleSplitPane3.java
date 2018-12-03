@@ -6,14 +6,20 @@
 package examplesplitpane3;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 /**
@@ -64,6 +70,27 @@ public class ExampleSplitPane3 extends Application {
         ToolsSplitPane.prefWidthProperty().bind(scene.widthProperty());
         ToolsSplitPane.prefHeightProperty().bind(scene.heightProperty());
         
+        ScrollPane canvasscroll = new ScrollPane();
+        canvasscroll.vvalueProperty().addListener(new ChangeListener<Number>() {
+          public void changed(ObservableValue<? extends Number> ov,
+              Number old_val, Number new_val) {
+                  System.out.println(new_val.intValue());
+          }
+        });
+        canvasscroll.hvalueProperty().addListener(new ChangeListener<Number>() {
+          public void changed(ObservableValue<? extends Number> ov,
+              Number old_val, Number new_val) {
+                  System.out.println(new_val.intValue());
+          }
+      });    
+        
+        canvasscroll.setMaxWidth(Double.MAX_VALUE);
+        canvasscroll.setMaxHeight(Double.MAX_VALUE);
+        // кнопка заполняет все пространство ячейки
+        Content.setHgrow(canvasscroll, Priority.ALWAYS);
+       
+        Content.getChildren().add(canvasscroll);
+        
         ToolsSplitPane.getItems().add(ToolsTopHBox);
         ToolsSplitPane.getItems().add(ToolsBottomHBox);
         
@@ -82,10 +109,28 @@ public class ExampleSplitPane3 extends Application {
         
         MainVBox.getChildren().add(MainSplitPane);
         
+        
+        
+        
         root.getChildren().add(MainVBox);
+        TopHBox.setMinHeight(20);
+        TopHBox.setMaxHeight(50);
         
+        ToolsTopHBox.setMaxHeight(150);
+        ToolsTopHBox.setMinHeight(50);
         
+        Tools.setMaxWidth(150);
+        Tools.setMinWidth(50);
+        ContentInfo.setMaxHeight(150);
+        ContentInfo.setMinHeight(50);
         
+        SplitPane.setResizableWithParent(Tools, Boolean.FALSE);
+        SplitPane.setResizableWithParent(ContentInfo, Boolean.FALSE);
+        SplitPane.setResizableWithParent(TopHBox, Boolean.FALSE);
+        SplitPane.setResizableWithParent(ToolsTopHBox, Boolean.FALSE);
+        
+        Circle rect = new Circle(200, 200, 100, Color.BLUE);
+        canvasscroll.setContent(rect);
         
         primaryStage.setScene(scene);
         primaryStage.show();
