@@ -30,71 +30,73 @@ public class ExampleSplitPane2 extends Application {
      @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Split Views");
+        primaryStage.show();
         Group root = new Group();
-        Scene scene = new Scene(root, 350, 250, Color.WHITE);
+        Scene scene = new Scene(root, 1024, 768, Color.WHITE);
         
-        SplitPane splitPane = new SplitPane();
-        splitPane.prefWidthProperty().bind(scene.widthProperty());
-        splitPane.prefHeightProperty().bind(scene.heightProperty());
-
-        VBox leftArea = new VBox(10);
+        SplitPane MainSplitPane = new SplitPane();
+        MainSplitPane.prefWidthProperty().bind(scene.widthProperty());
+        MainSplitPane.prefHeightProperty().bind(scene.heightProperty());
+        
+        VBox Tools = new VBox(10);
         HBox rowBox = new HBox(20);
-        final Text leftText = TextBuilder.create()
-                .text("Left ")
+        final Text ToolsText = TextBuilder.create()
+                .text("Tools")
                 .translateX(20)
                 .fill(Color.RED)
                 .font(Font.font(null, FontWeight.BOLD, 20))
                 .build();
 
-        rowBox.getChildren().add(leftText);
-        leftArea.getChildren().add(rowBox);
+        rowBox.getChildren().add(ToolsText);
+        Tools.getChildren().add(rowBox);
+        Tools.setAlignment(Pos.CENTER);
         
-        leftArea.setAlignment(Pos.CENTER);
         
-        SplitPane splitPane2 = new SplitPane();
-        splitPane2.setOrientation(Orientation.VERTICAL);
-        splitPane2.prefWidthProperty().bind(scene.widthProperty());
-        splitPane2.prefHeightProperty().bind(scene.heightProperty());
+        SplitPane ContentSplitPane = new SplitPane();
+        ContentSplitPane.setOrientation(Orientation.VERTICAL);
+        ContentSplitPane.prefWidthProperty().bind(scene.widthProperty());
+        ContentSplitPane.prefHeightProperty().bind(scene.heightProperty());
 
-        HBox centerArea = new HBox();
+        HBox Content = new HBox();
  
         final Text upperRight = TextBuilder.create()
-            .text("Text")
+            .text("Content")
             .x(100)
             .y(50)
              .fill(Color.RED)
             .font(Font.font(null, FontWeight.BOLD, 35))
             .translateY(50)
             .build();
-        centerArea.getChildren().add(upperRight);
+        Content.getChildren().add(upperRight);
 
-        HBox rightArea = new HBox();
+        HBox ContentInfo = new HBox();
         
         final Text lowerRight = TextBuilder.create()
-            .text("Lower Right")
+            .text("Content Info")
             .x(100)
             .y(50)
              .fill(Color.RED)
             .font(Font.font(null, FontWeight.BOLD, 35))
             .translateY(50)
             .build();
-        rightArea.getChildren().add(lowerRight);
+        ContentInfo.getChildren().add(lowerRight);
 
-        splitPane2.getItems().add(centerArea);
-        splitPane2.getItems().add(rightArea);
+        ContentSplitPane.getItems().add(Content);
+        ContentSplitPane.getItems().add(ContentInfo);
 
-        splitPane.getItems().add(leftArea);
+        MainSplitPane.getItems().add(Tools);
 
-        splitPane.getItems().add(splitPane2);
+        MainSplitPane.getItems().add(ContentSplitPane);
 
-        ObservableList<SplitPane.Divider> dividers = splitPane.getDividers();
+        ObservableList<SplitPane.Divider> dividers = MainSplitPane.getDividers();
         for (int i = 0; i < dividers.size(); i++) {
             dividers.get(i).setPosition((i + 1.0) / 3);
         }
         HBox hbox = new HBox();
-        hbox.getChildren().add(splitPane);
+        hbox.getChildren().add(MainSplitPane);
         root.getChildren().add(hbox);
-        
+        SplitPane.setResizableWithParent(Tools, Boolean.FALSE);
+        //SplitPane.setResizableWithParent(Tools, Boolean.FALSE);
         primaryStage.setScene(scene);
         primaryStage.show();
     }  
