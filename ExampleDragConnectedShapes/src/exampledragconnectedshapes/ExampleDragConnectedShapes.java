@@ -95,7 +95,9 @@ public class ExampleDragConnectedShapes extends Application {
         Line line1 = connect(redCircle, blueCircle);
         Line line2 = connect(redCircle, greenCircle);
         Line line3 = connect(greenCircle, blueCircle);
- 
+        Line line4 = connect(redCircle, greenCircle2);
+        Line line5 = connect(blueCircle, greenCircle2);
+        
         // add the circles 
         root.getChildren().add(redCircle);
         root.getChildren().add(blueCircle);
@@ -106,7 +108,8 @@ public class ExampleDragConnectedShapes extends Application {
         root.getChildren().add(line1);
         root.getChildren().add(line2);
         root.getChildren().add(line3);
-         
+        root.getChildren().add(line4);
+        root.getChildren().add(line5);
         // bring the circles to the front of the lines
         redCircle.toFront();
         blueCircle.toFront();
