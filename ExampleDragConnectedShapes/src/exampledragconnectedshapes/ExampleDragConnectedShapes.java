@@ -90,7 +90,7 @@ public class ExampleDragConnectedShapes extends Application {
         Circle redCircle = createCircle(100, 50, 30, Color.RED);
         Circle blueCircle = createCircle(200, 150, 20, Color.BLUE);
         Circle greenCircle = createCircle(400, 100, 40, Color.GREEN);
-        Circle greenCircle2 = createCircle(400, 100, 40, Color.GREEN);
+        Circle greenCircle2 = createCircle(400, 200, 40, Color.GREEN);
  
         Line line1 = connect(redCircle, blueCircle);
         Line line2 = connect(redCircle, greenCircle);
