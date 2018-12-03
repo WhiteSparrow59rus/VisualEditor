@@ -14,6 +14,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.input.MouseEvent;
@@ -40,7 +42,10 @@ public class ExampleSplitPane3 extends Application {
         
         Group root = new Group();
         Scene scene = new Scene(root, 1024, 768, Color.WHITE);
-        
+
+        Canvas canvas = new Canvas(2000, 2000);
+ 
+
         VBox MainVBox = new VBox();
         
         HBox TopHBox = new HBox();
@@ -136,13 +141,19 @@ public class ExampleSplitPane3 extends Application {
         SplitPane.setResizableWithParent(ToolsTopHBox, Boolean.FALSE);
         
         
-        circle_Blue = new Circle(50.0f, Color.BLUE);
-        circle_Blue.setCursor(Cursor.HAND);
-        circle_Blue.setTranslateX(300);
-        circle_Blue.setTranslateY(100);
-        circle_Blue.setOnMousePressed(circleOnMousePressedEventHandler);
-        circle_Blue.setOnMouseDragged(circleOnMouseDraggedEventHandler);
-        canvasscroll.setContent(circle_Blue);
+        
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        // Draw a Text
+        gc.setLineWidth(2.0);
+ // Set fill color
+
+        gc.setFill(Color.GREEN);
+
+        // Draw a rounded Rectangle
+
+        gc.fillRoundRect(50, 50, 300, 100, 10, 10);
+
+        canvasscroll.setContent(canvas);
         
         primaryStage.setScene(scene);
         primaryStage.show();
