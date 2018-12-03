@@ -30,7 +30,7 @@ public class ExampleSplitPane2 extends Application {
      @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Split Views");
-        primaryStage.show();
+        
         Group root = new Group();
         Scene scene = new Scene(root, 1024, 768, Color.WHITE);
         
@@ -38,8 +38,10 @@ public class ExampleSplitPane2 extends Application {
         MainSplitPane.prefWidthProperty().bind(scene.widthProperty());
         MainSplitPane.prefHeightProperty().bind(scene.heightProperty());
         
-        VBox Tools = new VBox(10);
-        HBox rowBox = new HBox(20);
+        VBox Tools = new VBox();
+        //Tools.setPrefWidth(40);// prefWidth 
+
+        HBox rowBox = new HBox();
         final Text ToolsText = TextBuilder.create()
                 .text("Tools")
                 .translateX(20)
@@ -65,7 +67,7 @@ public class ExampleSplitPane2 extends Application {
             .y(50)
              .fill(Color.RED)
             .font(Font.font(null, FontWeight.BOLD, 35))
-            .translateY(50)
+            .translateY(10)
             .build();
         Content.getChildren().add(upperRight);
 
@@ -77,7 +79,7 @@ public class ExampleSplitPane2 extends Application {
             .y(50)
              .fill(Color.RED)
             .font(Font.font(null, FontWeight.BOLD, 35))
-            .translateY(50)
+            .translateY(10)
             .build();
         ContentInfo.getChildren().add(lowerRight);
 
@@ -88,15 +90,18 @@ public class ExampleSplitPane2 extends Application {
 
         MainSplitPane.getItems().add(ContentSplitPane);
 
-        ObservableList<SplitPane.Divider> dividers = MainSplitPane.getDividers();
-        for (int i = 0; i < dividers.size(); i++) {
-            dividers.get(i).setPosition((i + 1.0) / 3);
-        }
+//        ObservableList<SplitPane.Divider> dividers = MainSplitPane.getDividers();
+//        for (int i = 0; i < dividers.size(); i++) {
+//            dividers.get(i).setPosition((i + 1.0) / 3);
+//        }
+        
         HBox hbox = new HBox();
         hbox.getChildren().add(MainSplitPane);
         root.getChildren().add(hbox);
         SplitPane.setResizableWithParent(Tools, Boolean.FALSE);
-        //SplitPane.setResizableWithParent(Tools, Boolean.FALSE);
+        SplitPane.setResizableWithParent(ContentInfo, Boolean.FALSE);
+        Tools.setMaxWidth(150);
+        ContentInfo.setMaxHeight(150);
         primaryStage.setScene(scene);
         primaryStage.show();
     }  
