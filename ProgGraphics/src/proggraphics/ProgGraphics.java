@@ -5,6 +5,7 @@
  */
 package proggraphics;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -108,12 +109,21 @@ public class ProgGraphics extends Application {
     }        
         LineB Line = new LineB();
         
-      
-        Line.create(100, 100, 90, 95);
-        Line.create(300, 300, 350, 250);
+
+        canvas.setOnMousePressed(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                Line.create(300, 300, (int) event.getX(), (int) event.getY());
+            }
+        });
+        canvas.setOnMouseDragged(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                Line.create(300, 300, (int) event.getX(), (int) event.getY());
+            }
+        });
         
         
-     
 //    
 //        for (int i = 0; i < 11; i++) {
 //            if (i == 5) continue;
