@@ -18,7 +18,7 @@ public class Laba1 {
      */
     public static void main(String[] args) {
         JFrame window = new JFrame("Brez");
-        window.setSize(600, 400);
+        window.setSize(1200, 800);
         window.setContentPane(new BresenhamLine());
         window.setDefaultCloseOperation(EXIT_ON_CLOSE);
         window.setVisible(true);
