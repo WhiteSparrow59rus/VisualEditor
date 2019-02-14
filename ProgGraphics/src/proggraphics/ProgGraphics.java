@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package proggraphics;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.VPos;
@@ -15,20 +16,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+
 /**
  *
  * @author Slava
  */
 public class ProgGraphics extends Application {
-    
-  
-     @Override
+
+    @Override
     public void start(Stage primaryStage) throws Exception {
         Canvas canvas = new Canvas(600, 600);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        
-        
- 
+
         // сетка
         gc.setStroke(Color.GRAY);
         gc.setLineWidth(.5);
@@ -41,98 +40,109 @@ public class ProgGraphics extends Application {
         gc.setStroke(Color.BLUE);
         gc.setLineDashes(null);
         gc.setLineWidth(1);
- 
+
         // числа
         gc.setTextAlign(TextAlignment.CENTER);
         for (int i = 0; i < 11; i++) {
-            if (i == 5) continue;
+            if (i == 5) {
+                continue;
+            }
             gc.strokeText(String.valueOf(i * 60 - 300), i * 60, 315);
         }
         gc.setTextBaseline(VPos.CENTER);
         gc.setTextAlign(TextAlignment.LEFT);
         for (int i = 0; i < 11; i++) {
-            if (i == 5) continue;
+            if (i == 5) {
+                continue;
+            }
             gc.strokeText(String.valueOf(300 - i * 60), 310, i * 60);
         }
- 
+
         gc.setStroke(Color.BLACK);
         gc.strokeLine(300, 0, 300, 600);    // zero line
         gc.strokeLine(0, 300, 600, 300);    // zero line
- 
-        class LineB{
+
+        class LineB {
+
             GraphicsContext gc = canvas.getGraphicsContext2D();
-            void create(int x1, int y1, int x2, int y2){
-                int A = y2 - y1;
-                int B = x1 - x2;
-                int Sign;
-                int SignA;
-                int SignB;
-                int f;
-                int X;
-                int Y;
-                
-                if  (Math.abs(A) >  Math.abs(B)) {
+
+            void draw(int xstart, int ystart, int xend, int yend) {
+                int A = yend - ystart;
+                int B = xstart - xend;
+                int Sign, SignA, SignB, f, X, Y;
+
+                if (Math.abs(A) > Math.abs(B)) {
                     Sign = 1;
                 } else {
                     Sign = -1;
                 }
-                if (A < 0) {SignA = -1;} else {SignA = 1;} 
-                if (B < 0) {SignB = -1;} else {SignB = 1;} 
-                f = 0;
-                X = x1;
-                Y = y1;
-                gc.fillRect(X,  Y, 1, 1);
-                if  (Sign == -1) {
-                    do {
-                    f = f + A*SignA;
-                        if (f > 0) {
-                            f = f - B*SignB;
-                            Y = Y + SignA;
-                        } 
-                    X = X - SignB;
-                    gc.fillRect(X,  Y, 1, 1);
-                    
-
-                    } while (X != x2 || Y != y2);
-                } else
-                    do {
-                    f = f + B*SignB;
-                        if (f > 0) {
-                            f = f - A*SignA;
-                            X = X - SignB;
-                        } 
-                    Y = Y + SignA;
-                    gc.fillRect(X,  Y, 1, 1);    
-                    } while (X != x2 || Y != y2);
+                if (A < 0) {
+                    SignA = -1;
+                } else {
+                    SignA = 1;
                 }
-        
-    }        
-        LineB Line = new LineB();
-        
+                if (B < 0) {
+                    SignB = -1;
+                } else {
+                    SignB = 1;
+                }
+                f = 0;
+                X = xstart;
+                Y = ystart;
+                gc.fillRect(X, Y, 1, 1);
+                if (Sign == -1) {
+                    do {
+                        f = f + A * SignA;
+                        if (f > 0) {
+                            f = f - B * SignB;
+                            Y = Y + SignA;
+                        }
+                        X = X - SignB;
+                        gc.fillRect(X, Y, 1, 1);
 
-        canvas.setOnMousePressed(new EventHandler<MouseEvent>(){
+                    } while (X != xend || Y != yend);
+                } else {
+                    do {
+                        f = f + B * SignB;
+                        if (f > 0) {
+                            f = f - A * SignA;
+                            X = X - SignB;
+                        }
+                        Y = Y + SignA;
+                        gc.fillRect(X, Y, 1, 1);
+                    } while (X != xend || Y != yend);
+                }
+            }
+        }
+        LineB Line = new LineB();
+
+        canvas.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Line.create(300, 300, (int) event.getX(), (int) event.getY());
+                if (!event.isPrimaryButtonDown()) {
+                    return;
+                }
+                Line.draw(300, 300, (int) event.getX(), (int) event.getY());
             }
         });
-        canvas.setOnMouseDragged(new EventHandler<MouseEvent>(){
+        canvas.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Line.create(300, 300, (int) event.getX(), (int) event.getY());
+                if (!event.isPrimaryButtonDown()) {
+                    return;
+                }
+
+                Line.draw(300, 300, (int) event.getX(), (int) event.getY());
             }
         });
-        
-        
+
 //    
 //        for (int i = 0; i < 11; i++) {
 //            if (i == 5) continue;
 //            gc.strokeText(String.valueOf(i * 60 - 300), i * 60, 315);
 //        }
-        
- 
         primaryStage.setScene(new Scene(new Group(canvas)));
         primaryStage.show();
     }
-   
+
 }
